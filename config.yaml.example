@@ -1,0 +1,24 @@
+# TODO Application Configuration
+# Copy this file to config.yaml and customize as needed
+
+db:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: postgres
+  name: todo_db
+  sslMode: disable
+  # Connection pool settings (using pgxpool for fine-grained control)
+  pool:
+    minConns: 3              # Minimum connections to maintain (default: 3)
+    maxConns: 5              # Maximum connections allowed (default: 5)
+    maxConnLifetime: 5       # Connection max lifetime in minutes (default: 5)
+    maxConnIdleTime: 5       # Connection max idle time in minutes (default: 5)
+
+server:
+  port: 8080
+  mode: debug  # Options: debug, release, test
+
+log:
+  level: info   # Options: debug, info, warn, error
+  pretty: true  # Enable pretty consoSle output (disable in production)
