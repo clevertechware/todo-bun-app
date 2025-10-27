@@ -68,7 +68,7 @@ handlers (HTTP) → usecases (Business Logic) → repositories (Data Access) →
 
 ## Prerequisites
 
-- Go 1.21+
+- Go 1.25+
 - Postgres 18+
 - Docker (optional, for running Postgres)
 
