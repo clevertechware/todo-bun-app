@@ -10,6 +10,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
+	"github.com/uptrace/bun/extra/bundebug"
 
 	"github.com/clevertechware/todo-bun-app/internal/app/db"
 	"github.com/clevertechware/todo-bun-app/internal/app/handlers"
@@ -61,6 +62,16 @@ func NewApp(ctx context.Context, cfg *config.Config) (*App, error) {
 	// Convert pgxpool to database/sql for Bun compatibility
 	sqldb := stdlib.OpenDBFromPool(pool)
 	bunDB := bun.NewDB(sqldb, pgdialect.New())
+	bunDB.AddQueryHook(
+		bundebug.NewQueryHook(
+			// disable the hook
+			bundebug.WithEnabled(false),
+
+			// BUNDEBUG=1 logs failed queries
+			// BUNDEBUG=2 logs all queries
+			bundebug.FromEnv("BUNDEBUG"),
+		),
+	)
 
 	globalLogger.Info().
 		Str("host", cfg.Database.Host).
